@@ -1,68 +1,170 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
+* {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Space Mono", monospace;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.container {
+  width: 1440px;
+  margin: 0 auto;
 }
 
-button {
+/* Large laptops and desktops */
+@media (max-width: 1440px) {
+  .container {
+    width: 100%;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (max-width: 1024px) {
+  .container {
+    width: 100%;
+  }
+}
+
+/* Small tablets and large phones */
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}
+
+/* Small devices (phones) */
+@media (max-width: 480px) {
+  .container {
+    width: 100%;
+    padding: 0 15px;
+    /* optional tighter padding for very small screens */
+  }
+}
+
+
+
+
+/* Common Tags Styles */
+
+header h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+
+h2 {
+  margin: 20px 0;
+  text-shadow: 2px 4px 4px #a4f88d;
+
+}
+
+@media(max-width:500px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  p,
+  li {
+    font-size: 13px;
+  }
+
+  th,
+  td {
+    font-size: 10px !important;
+    font-weight: 100 !important;
+  }
+
+  table {
+    overflow: scroll;
+  }
+}
+
+@media(max-width:800px) {
+  table {
+    overflow: scroll;
+  }
+}
+
+
+
+p {
+  line-height: 1.6;
+}
+
+pre {
+  margin: 30px 0;
+  background: #eee;
+  padding: 10px;
+  overflow-x: auto;
+  border-radius: 4px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: black;
+  color: white;
+  box-shadow: 0 0 8px #B6F500;
+  overflow: scroll;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 20px 10px;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+th {
+  background-color: #5d11ab;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #827196;
+}
+
+section {
+  background: #fff;
+  color: #333;
+  padding: 20px;
+  margin: 30px 0;
+  border-left: 5px solid #5d11ab;
+  box-shadow: 0 0 8px #B6F500;
+}
+
+ul li {
+  list-style: square;
+  margin: 20px 40px;
+}
+
+.highlight {
+  background-color: yellow;
+}
+
+/* css */
+
+
+.learn-box {
+  background: gray;
+  border-left: 6px solid greenyellow;
+  padding: 20px;
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  box-shadow: 0 0 8px #B6F500;
+  max-width: 100%;
+  margin: auto;
+  line-height: 30px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+#unique {
+  color: #16a34a;
+  text-decoration: underline;
 }
