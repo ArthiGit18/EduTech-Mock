@@ -9,6 +9,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import { useAuthModal } from '../context/AuthModalContext';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -21,18 +23,28 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const Nav = () => {
-    const [loginOpen, setLoginOpen] = useState(false);
-    const [signupOpen, setSignupOpen] = useState(false);
     const [user, setUser] = useState(() => {
-        const userData = localStorage.getItem("user");
+        const userData = localStorage.getItem('user');
         return userData ? JSON.parse(userData) : null;
     });
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(false);
 
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const [loadingLogin, setLoadingLogin] = useState(false);
+    const [loadingSignup, setLoadingSignup] = useState(false);
 
     const [loginData, setLoginData] = useState({ username: '', password: '' });
     const [signupData, setSignupData] = useState({ username: '', email: '', password: '' });
+
+    const {
+        loginOpen,
+        signupOpen,
+        openLogin,
+        closeLogin,
+        openSignup,
+        closeSignup,
+    } = useAuthModal();
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -40,12 +52,6 @@ const Nav = () => {
             setUser(JSON.parse(storedUser));
         }
     }, []);
-
-    const handleLoginOpen = () => setLoginOpen(true);
-    const handleLoginClose = () => setLoginOpen(false);
-
-    const handleSignupOpen = () => setSignupOpen(true);
-    const handleSignupClose = () => setSignupOpen(false);
 
     const handleLoginChange = (e) => {
         setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -57,6 +63,7 @@ const Nav = () => {
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
+        setLoadingLogin(true);
         try {
             const res = await axios.post('https://edutech-backend-znpm.onrender.com/api/auth/login', loginData);
             const token = res.data.token;
@@ -68,14 +75,18 @@ const Nav = () => {
             setUser(userData);
 
             alert(res.data.message || "Login Successful!");
-            handleLoginClose();
+            closeLogin();
         } catch (err) {
             alert(err.response?.data?.message || "Login Failed");
+        } finally {
+            setLoadingLogin(false);
         }
     };
 
+
     const handleSignupSubmit = async (e) => {
         e.preventDefault();
+        setLoadingSignup(true);
         try {
             const res = await axios.post('https://edutech-backend-znpm.onrender.com/api/auth/signup', signupData);
             const token = res.data.token;
@@ -86,15 +97,18 @@ const Nav = () => {
             setUser(userData);
 
             alert("Signup Successful!");
-            handleSignupClose();
+            closeSignup();
         } catch (err) {
             alert(err.response?.data?.message || "Signup Failed");
+        } finally {
+            setLoadingSignup(false);
         }
     };
 
+
     const handleLogout = () => {
-        localStorage.removeItem("user");
-        localStorage.removeItem("token");
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
         setUser(null);
         setDropdownOpen(false);
     };
@@ -108,11 +122,10 @@ const Nav = () => {
             <div className='container'>
                 <nav className='nav_items'>
                     <div className='nav_logo'>
-                        <NavLink to='/'><img src="./eduTechB1.png" alt="logo" /></NavLink>
+                        <NavLink to='/'><img src='./eduTechB1.png' alt='logo' /></NavLink>
                     </div>
 
-                    {/* Hamburger Icon (only visible under 700px) */}
-                    <div className="hamburger_icon" onClick={() => setMenuOpen(!menuOpen)}>
+                    <div className='hamburger_icon' onClick={() => setMenuOpen(!menuOpen)}>
                         {menuOpen ? <CloseIcon style={{ color: 'white', fontSize: 30 }} /> : <MenuIcon style={{ color: 'white', fontSize: 30 }} />}
                     </div>
 
@@ -122,13 +135,6 @@ const Nav = () => {
                         <li><NavLink to='/service'>Services</NavLink></li>
                         <li><NavLink to='/contact-us-our-team'>Contact</NavLink></li>
                     </ul>
-
-                    {/* <ul className='nav_links'>
-                        <li><NavLink to='/'>Home</NavLink></li>
-                        <li><NavLink to='/about-us-our-team'>About</NavLink></li>
-                        <li><NavLink to='/service'>Services</NavLink></li>
-                        <li><NavLink to='/contact-us-our-team'>Contact</NavLink></li>
-                    </ul> */}
 
                     <div className='nav_buttons'>
                         {user ? (
@@ -147,7 +153,7 @@ const Nav = () => {
                                         borderRadius: '50%',
                                         fontWeight: 'bold',
                                         fontSize: '18px',
-                                        cursor: 'pointer'
+                                        cursor: 'pointer',
                                     }}
                                 >
                                     {user.username.charAt(0).toUpperCase()}
@@ -198,8 +204,8 @@ const Nav = () => {
                             </div>
                         ) : (
                             <>
-                                <button onClick={handleLoginOpen}>Login</button>
-                                <button onClick={handleSignupOpen}>Sign Up</button>
+                                <button onClick={openLogin}>Login</button>
+                                <button onClick={openSignup}>Sign Up</button>
                             </>
                         )}
                     </div>
@@ -208,78 +214,83 @@ const Nav = () => {
 
             {/* Login Dialog */}
             <BootstrapDialog
-                onClose={handleLoginClose}
-                aria-labelledby="login-dialog-title"
+                onClose={closeLogin}
                 open={loginOpen}
+                aria-labelledby='login-dialog-title'
                 PaperProps={{ className: 'dialog_box' }}
             >
-                <DialogTitle id="login-dialog-title" className='dialog_title'>Login</DialogTitle>
+                <DialogTitle id='login-dialog-title' className='dialog_title'>Login</DialogTitle>
                 <DialogContent dividers>
                     <form onSubmit={handleLoginSubmit}>
                         <label>Enter Username:</label>
                         <input
-                            type="text"
-                            name="username"
-                            placeholder="Enter Username"
+                            type='text'
+                            name='username'
+                            placeholder='Enter Username'
                             value={loginData.username}
                             onChange={handleLoginChange}
                         />
                         <label>Enter Password:</label>
                         <input
-                            type="password"
-                            name="password"
-                            placeholder="Enter Password"
+                            type='password'
+                            name='password'
+                            placeholder='Enter Password'
                             value={loginData.password}
                             onChange={handleLoginChange}
                         />
-                        <button type="submit">Login</button>
+                        <div className='form_actions'>
+                            <button onClick={closeLogin}>Close</button>
+                            <button type="submit" disabled={loadingLogin}>
+                                {loadingLogin ? <CircularProgress size={20} color="inherit" /> : 'Login'}
+                            </button>
+                        </div>
                     </form>
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleLoginClose}>Close</Button>
-                </DialogActions>
             </BootstrapDialog>
 
             {/* Sign Up Dialog */}
             <BootstrapDialog
-                onClose={handleSignupClose}
-                aria-labelledby="signup-dialog-title"
+                onClose={closeSignup}
                 open={signupOpen}
+                aria-labelledby='signup-dialog-title'
                 PaperProps={{ className: 'dialog_box' }}
             >
-                <DialogTitle id="signup-dialog-title" className='dialog_title'>Sign Up</DialogTitle>
+                <DialogTitle id='signup-dialog-title' className='dialog_title'>Sign Up</DialogTitle>
                 <DialogContent dividers>
                     <form onSubmit={handleSignupSubmit}>
                         <label>Enter Username:</label>
                         <input
-                            type="text"
-                            name="username"
-                            placeholder="Enter Username"
+                            type='text'
+                            name='username'
+                            placeholder='Enter Username'
                             value={signupData.username}
                             onChange={handleSignupChange}
                         />
                         <label>Enter Email:</label>
                         <input
-                            type="email"
-                            name="email"
-                            placeholder="Enter Email"
+                            type='email'
+                            name='email'
+                            placeholder='Enter Email'
                             value={signupData.email}
                             onChange={handleSignupChange}
                         />
                         <label>Enter Password:</label>
                         <input
-                            type="password"
-                            name="password"
-                            placeholder="Enter Password"
+                            type='password'
+                            name='password'
+                            placeholder='Enter Password'
                             value={signupData.password}
                             onChange={handleSignupChange}
                         />
-                        <button type="submit">Sign Up</button>
+                        <div className='form_actions'>
+                            <button onClick={closeSignup}>Close</button>
+                            <button type="submit" disabled={loadingSignup}>
+                                {loadingSignup ? 'Signing up...' : 'Sign Up'}
+                            </button>
+                        </div>
+
                     </form>
                 </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleSignupClose}>Close</Button>
-                </DialogActions>
             </BootstrapDialog>
         </div>
     );

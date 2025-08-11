@@ -599,3 +599,66 @@
         }
     }
 }
+
+
+.dialog_box {
+    border: 2px solid #B6F500 !important;
+    border-radius: 20px !important;
+    padding: 20px;
+    box-shadow: #B6F500 15px 15px 15px -12px !important;
+    color: #B6F500 !important;
+    background-color: #687d66 !important;
+    text-align: center;
+
+    .dialog_title {
+        font-weight: 700;
+        text-shadow: none;
+        font-size: 25px !important;
+    }
+
+    form input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 20px;
+        border: 2px solid #B6F500;
+        background-color: #d6fdd1 !important;
+        margin-bottom: 10px;
+    }
+
+    form button {
+        width: 200px;
+        padding: 10px;
+        margin: auto;
+        border-radius: 20px;
+        border: 1px solid #B6F500;
+        background: radial-gradient(141.42% 141.42% at 100% 0%, #fff6, #fff0), radial-gradient(140.35% 140.35% at 100% 94.74%, #B6F500, #B6F50000), radial-gradient(89.94% 89.94% at 18.42% 15.79%, #41d1ff, #41d1ff00);
+        box-shadow: 0 1px #ffffffbf inset;
+        color: black;
+        font-weight: 700;
+        font-size: 20px;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: #B6F500 15px 15px 15px -15px;
+        }
+    }
+    .form_actions{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+// Logout_btn
+// .Logout_btn:hover{
+//     background-color: lightcoral !important;
+//     color: white;
+// }
+
+.box {
+    background-color: #e0f7fa;
+    color: black !important;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #00acc1;
+}
