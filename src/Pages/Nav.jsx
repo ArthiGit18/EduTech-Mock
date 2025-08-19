@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
@@ -23,10 +23,13 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 }));
 
 const Nav = () => {
+    const navigate = useNavigate();
     const [user, setUser] = useState(() => {
         const userData = localStorage.getItem('user');
         return userData ? JSON.parse(userData) : null;
     });
+
+
 
     const [menuOpen, setMenuOpen] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -34,7 +37,7 @@ const Nav = () => {
     const [loadingLogin, setLoadingLogin] = useState(false);
     const [loadingSignup, setLoadingSignup] = useState(false);
 
-    const [loginData, setLoginData] = useState({ username: '', password: '' });
+    const [loginData, setLoginData] = useState({ email: '', password: '' });
     const [signupData, setSignupData] = useState({ username: '', email: '', password: '' });
 
     const {
@@ -65,16 +68,15 @@ const Nav = () => {
         e.preventDefault();
         setLoadingLogin(true);
         try {
-            const res = await axios.post('https://edutech-backend-znpm.onrender.com/api/auth/login', loginData);
+            const res = await axios.post('http://localhost:5000/api/auth/login', loginData);
             const token = res.data.token;
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            const userData = { username: payload.username };
+            const userData = res.data.user; // ✅ full user object
 
             localStorage.setItem('token', token);
             localStorage.setItem('user', JSON.stringify(userData));
             setUser(userData);
 
-            alert(res.data.message || "Login Successful!");
+            alert("Login Successful!");
             closeLogin();
         } catch (err) {
             alert(err.response?.data?.message || "Login Failed");
@@ -88,7 +90,7 @@ const Nav = () => {
         e.preventDefault();
         setLoadingSignup(true);
         try {
-            const res = await axios.post('https://edutech-backend-znpm.onrender.com/api/auth/signup', signupData);
+            const res = await axios.post('http://localhost:5000/api/auth/signup', signupData);
             const token = res.data.token;
             const userData = res.data.user;
 
@@ -96,7 +98,7 @@ const Nav = () => {
             localStorage.setItem('user', JSON.stringify(userData));
             setUser(userData);
 
-            alert("Signup Successful!");
+            alert(`Signup Successful! Your Exam ID: ${userData.examId}`);
             closeSignup();
         } catch (err) {
             alert(err.response?.data?.message || "Signup Failed");
@@ -185,6 +187,24 @@ const Nav = () => {
                                             Home
                                         </a>
                                         <button
+                                            onClick={() => {
+                                                setDropdownOpen(false);
+                                                navigate(`/my-profile-details/${user.id}`);
+                                            }}
+                                            style={{
+                                                width: '100%',
+                                                padding: '10px 20px',
+                                                border: 'none',
+                                                backgroundColor: 'transparent',
+                                                textAlign: 'left',
+                                                cursor: 'pointer',
+                                                color: '#333'
+                                            }}
+                                        >
+                                            My Profile
+                                        </button>
+
+                                        <button
                                             className='Logout_btn'
                                             onClick={handleLogout}
                                             style={{
@@ -222,7 +242,26 @@ const Nav = () => {
                 <DialogTitle id='login-dialog-title' className='dialog_title'>Login</DialogTitle>
                 <DialogContent dividers>
                     <form onSubmit={handleLoginSubmit}>
-                        <label>Enter Username:</label>
+
+                        <label>Enter Email:</label>
+                        <input
+                            type='email'
+                            name='email'
+                            placeholder='Enter Email'
+                            value={loginData.email}
+                            onChange={handleLoginChange}
+                        />
+
+                        <label>Enter Password:</label>
+                        <input
+                            type='password'
+                            name='password'
+                            placeholder='Enter Password'
+                            value={loginData.password}
+                            onChange={handleLoginChange}
+                        />
+
+                        {/* <label>Enter Username:</label>
                         <input
                             type='text'
                             name='username'
@@ -237,7 +276,7 @@ const Nav = () => {
                             placeholder='Enter Password'
                             value={loginData.password}
                             onChange={handleLoginChange}
-                        />
+                        /> */}
                         <div className='form_actions'>
                             <button onClick={closeLogin}>Close</button>
                             <button type="submit" disabled={loadingLogin}>
