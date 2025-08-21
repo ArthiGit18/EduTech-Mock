@@ -10,44 +10,39 @@ import { useAuthModal } from '../context/AuthModalContext';
 const topics = [
     {
         id: 1,
-        title: 'Common Interview Questions',
-        path: '/instruction-over-test',
-        img: './assets/icons/html/3.png',
+        path: '/instruction-over-test/HTML',
+        img: './assets/icons/html/1.png',
+        title: "HTML Mock Test",
         description:
-            'Frequently asked questions across technical interviews including HR, aptitude, and behavioral rounds.'
+            "Check your knowledge of HTML basics and semantic tags. Perfect for beginners to practice structure and elements.",
     },
     {
         id: 2,
-        title: 'React - JavaScript Library',
-        path: '/instruction-over-test',
+        path: '/instruction-over-test/CSS',
         img: './assets/icons/html/2.png',
+        title: "CSS Mock Test",
         description:
-            'React is a JavaScript library for building user interfaces using components and managing application state efficiently.'
+            "Test your CSS skills including selectors, layouts, and responsive design. Sharpen your styling knowledge.",
     },
     {
         id: 3,
-        title: 'Node.js - Backend JavaScript',
-        path: '/instruction-over-test',
-        img: './assets/icons/html/1.png',
+        path: '/instruction-over-test/JAVASCRIPT',
+        img: './assets/icons/html/3.png',
+        title: "JavaScript Mock Test",
         description:
-            'Node.js is a runtime environment that allows you to run JavaScript on the server, build APIs, and create scalable backend systems.'
+            "Challenge yourself with JS concepts like variables, functions, and DOM. Great for improving problem-solving skills.",
+
     },
+   
     {
         id: 4,
-        title: 'HTML - HyperText Markup Language',
-        path: '/instruction-over-test',
+        path: '/instruction-over-test/REACT',
         img: './assets/icons/html/4.png',
+        title: "React Mock Test",
         description:
-            'HTML is the standard markup language used to create the structure of web pages. It defines elements like headings, paragraphs, images, and links.'
-    },
-    // {
-    //     id: 5,
-    //     title: 'CSS - Cascading Style Sheets',
-    //     path: '/css-questions',
-    //     img: './assets/icons/css/1.png',
-    //     description:
-    //         'CSS is used to style HTML elements, control layout, colors, fonts, responsiveness, and overall appearance of a website.'
-    // }
+            "Evaluate your React skills including hooks, components, and props. Ideal for frontend developers preparing interviews.",
+
+    }
 ];
 const MAX_LENGTH = 60;
 const TopicCards = () => {
@@ -65,7 +60,7 @@ const TopicCards = () => {
         });
     }, []);
 
-     const handleCardClick = (path) => {
+    const handleCardClick = (path) => {
         const user = localStorage.getItem("user");
         if (user) {
             navigate(path);
@@ -80,18 +75,18 @@ const TopicCards = () => {
         // Redirect or open login dialog based on your Nav component
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
-    
+
     return (
         <div className='cards_wrapper'>
             <div className='container'>
                 <h2>Our service</h2>
                 <div className='cards' ref={faqContainerRef}>
                     {topics.map((topic) => (
-                        <div className='card' key={topic.id} onClick={() => handleCardClick(`{topic.path}`)}>
+                        <div className='card' key={topic.id} onClick={() => handleCardClick(topic.path)}>
                             {/* <NavLink to={topic.path}> */}
-                                <div className='card_img'>
-                                    <img src={topic.img} alt={`${topic.title} Icon`} />
-                                </div>
+                            <div className='card_img'>
+                                <img src={topic.img} alt={`${topic.title} Icon`} />
+                            </div>
                             {/* </NavLink> */}
                             <h2>{topic.title}</h2>
                             <p>{topic.description}</p>

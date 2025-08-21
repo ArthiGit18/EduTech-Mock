@@ -142,21 +142,21 @@ const Nav = () => {
                         {user ? (
                             <div className="user_avatar_section" style={{ position: 'relative' }}>
                                 <div
-                                    className="user_avatar"
+                                    className="button-52" role="button"
                                     onClick={toggleDropdown}
-                                    style={{
-                                        backgroundColor: '#1976d2',
-                                        color: '#fff',
-                                        width: '40px',
-                                        height: '40px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        borderRadius: '50%',
-                                        fontWeight: 'bold',
-                                        fontSize: '18px',
-                                        cursor: 'pointer',
-                                    }}
+                                    // style={{
+                                    //     backgroundColor: '#a5d513',
+                                    //     color: '#fff',
+                                    //     width: '40px',
+                                    //     height: '40px',
+                                    //     display: 'flex',
+                                    //     alignItems: 'center',
+                                    //     justifyContent: 'center',
+                                    //     borderRadius: '50%',
+                                    //     fontWeight: 'bold',
+                                    //     fontSize: '18px',
+                                    //     cursor: 'pointer',
+                                    // }}
                                 >
                                     {user.username.charAt(0).toUpperCase()}
                                 </div>
@@ -261,22 +261,6 @@ const Nav = () => {
                             onChange={handleLoginChange}
                         />
 
-                        {/* <label>Enter Username:</label>
-                        <input
-                            type='text'
-                            name='username'
-                            placeholder='Enter Username'
-                            value={loginData.username}
-                            onChange={handleLoginChange}
-                        />
-                        <label>Enter Password:</label>
-                        <input
-                            type='password'
-                            name='password'
-                            placeholder='Enter Password'
-                            value={loginData.password}
-                            onChange={handleLoginChange}
-                        /> */}
                         <div className='form_actions'>
                             <button onClick={closeLogin}>Close</button>
                             <button type="submit" disabled={loadingLogin}>

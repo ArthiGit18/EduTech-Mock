@@ -36,53 +36,53 @@ const Service = () => {
                     <h2>Our Services</h2>
                     <div className='cards' ref={faqContainerRef}>
 
-                        <div className='card' onClick={() => handleCardClick("/instruction-over-test")}>
+                        <div className='card' onClick={() => handleCardClick("/instruction-over-test/HTML")}>
                             <div className='card_img'>
                                 <img src='./assets/icons/html/1.png' alt='HTML Icon' />
                             </div>
-                            <h2>HTML - HyperText Markup Language</h2>
+                            <h2>HTML Mock Test</h2>
                             <p>
-                                HTML is the standard markup language used to create the structure of web pages. It defines elements like headings, paragraphs, images, and links.
+                                Check your knowledge of HTML basics and semantic tags. Perfect for beginners to practice structure and elements.
                             </p>
                         </div>
 
-                        <div className='card' onClick={() => handleCardClick("/instruction-over-test")}>
+                        <div className='card' onClick={() => handleCardClick("/instruction-over-test/CSS")}>
                             <div className='card_img'>
                                 <img src='./assets/icons/html/2.png' alt='CSS Icon' />
                             </div>
-                            <h2>CSS - Cascading Style Sheets</h2>
+                            <h2>CSS Mock Test</h2>
                             <p>
-                                CSS is used to style and layout web pages — for example, to change fonts, colors, spacing, and responsiveness.
+                                Test your CSS skills including selectors, layouts, and responsive design. Sharpen your styling knowledge.
                             </p>
                         </div>
 
-                        <div className='card' onClick={() => handleCardClick("/instruction-over-test")}>
+                        <div className='card' onClick={() => handleCardClick("/instruction-over-test/JAVASCRIPT")}>
                             <div className='card_img'>
                                 <img src='./assets/icons/html/3.png' alt='JavaScript Icon' />
                             </div>
-                            <h2>JavaScript</h2>
+                            <h2>JavaScript Mock Test</h2>
                             <p>
-                                JavaScript is a programming language that adds interactivity to websites, such as form validations, button clicks, animations, and dynamic content.
+                                Challenge yourself with JS concepts like variables, functions, and DOM. Great for improving problem-solving skills.
                             </p>
                         </div>
 
-                        <div className='card' onClick={() => handleCardClick("/instruction-over-test")}>
+                        <div className='card' onClick={() => handleCardClick("/instruction-over-test/REACT")}>
                             <div className='card_img'>
-                                <img src='./assets/icons/html/5.png' alt='FAQs Icon' />
+                                <img src='./assets/icons/html/4.png' alt='FAQs Icon' />
                             </div>
-                            <h2>FAQs</h2>
+                            <h2>React Mock Test</h2>
                             <p>
-                                Important FAQs for HTML, CSS, JAVASCRIPT, React JS
+                                Evaluate your React skills including hooks, components, and props. Ideal for frontend developers preparing interviews.
                             </p>
                         </div>
 
-                        <div className='card' onClick={() => handleCardClick("/instruction-over-test")}>
+                        <div className='card' onClick={() => handleCardClick("/instruction-over-test/NODE JS")}>
                             <div className='card_img'>
-                                <img src='./assets/icons/html/6.png' alt='Number Programming Icon' />
+                                <img src='./assets/icons/html/5.png' alt='Number Programming Icon' />
                             </div>
-                            <h2>Number Programming</h2>
+                            <h2>Node.js Mock Test</h2>
                             <p>
-                                Important Concepts on Number Programming for Javascript and Java
+                                Test your backend knowledge with Node.js concepts like APIs, middleware, and modules. Strengthen your server-side skills.
                             </p>
                         </div>
 
