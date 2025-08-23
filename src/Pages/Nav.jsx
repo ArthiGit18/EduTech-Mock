@@ -136,6 +136,7 @@ const Nav = () => {
                         <li><NavLink to='/about-us-our-team'>About</NavLink></li>
                         <li><NavLink to='/service'>Services</NavLink></li>
                         <li><NavLink to='/contact-us-our-team'>Contact</NavLink></li>
+                        <li><NavLink to='https://edutechlearners.netlify.app/'>EduTech - Learning Website</NavLink></li>
                     </ul>
 
                     <div className='nav_buttons'>
@@ -144,19 +145,7 @@ const Nav = () => {
                                 <div
                                     className="button-52" role="button"
                                     onClick={toggleDropdown}
-                                    // style={{
-                                    //     backgroundColor: '#a5d513',
-                                    //     color: '#fff',
-                                    //     width: '40px',
-                                    //     height: '40px',
-                                    //     display: 'flex',
-                                    //     alignItems: 'center',
-                                    //     justifyContent: 'center',
-                                    //     borderRadius: '50%',
-                                    //     fontWeight: 'bold',
-                                    //     fontSize: '18px',
-                                    //     cursor: 'pointer',
-                                    // }}
+                                   
                                 >
                                     {user.username.charAt(0).toUpperCase()}
                                 </div>
