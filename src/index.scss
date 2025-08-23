@@ -924,6 +924,28 @@
             color: white;
         }
 
+        .profile-pic-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            row-gap: 20px;
+
+            img {
+                height: 200px;
+                width: 200px;
+                border-radius: 50%;
+            }
+
+            .upload-btn {
+                color: black !important;
+                background-color: white;
+                padding: 10px;
+                margin: 10px;
+                cursor: pointer;
+            }
+        }
+
         .profile-field {
             padding: 20px 12px;
             background: #f7f7f7;

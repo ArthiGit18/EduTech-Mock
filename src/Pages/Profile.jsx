@@ -13,6 +13,7 @@ const Profile = () => {
         email: "",
         examId: "",
         password: "",
+        profilePic: "",
     });
 
     const [testStatus, setTestStatus] = useState(null); // <-- store test details
@@ -20,6 +21,7 @@ const Profile = () => {
     const [isEditable, setIsEditable] = useState(false);
     const [hasPrompted, setHasPrompted] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [uploading, setUploading] = useState(false);
 
     // ✅ Fetch user profile
     useEffect(() => {
@@ -113,6 +115,30 @@ const Profile = () => {
             });
     };
 
+    const handleProfilePicUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("profilePic", file);
+        formData.append("userId", id);
+
+        try {
+            setUploading(true);
+            const res = await axios.post("http://localhost:5000/api/auth/upload-profile-pic", formData, {
+                headers: { "Content-Type": "multipart/form-data" },
+            });
+
+            setProfileData((prev) => ({ ...prev, profilePic: res.data.profilePicUrl }));
+            alert("Profile picture updated!");
+        } catch (err) {
+            alert(err.response?.data?.msg || "Error uploading profile picture");
+        } finally {
+            setUploading(false);
+        }
+    };
+
+
     return (
 
         <>
@@ -121,6 +147,28 @@ const Profile = () => {
 
                 <div className="profile-container">
                     <h2>My Profile</h2>
+
+                    <div className="profile-pic-wrapper">
+                        <img
+                            src={
+                                profileData.profilePic
+                                    ? `http://localhost:5000${profileData.profilePic}`
+                                    : "https://i.pinimg.com/736x/f7/0b/c0/f70bc0471f50dd9567f663f0c5467c1f.jpg"
+                            }
+                            alt="Profile"
+                            className="profile-pic"
+                        />
+                        <label className="upload-btn">
+                            {uploading ? "Uploading..." : "Change Photo"}
+                            <input
+                                type="file"
+                                accept="image/*"
+                                style={{ display: "none" }}
+                                onChange={handleProfilePicUpload}
+                            />
+                        </label>
+                    </div>
+
 
                     {/* Username */}
                     <div className={`profile-field ${isEditable ? "editable" : ""}`} onClick={handleEditClick}>
@@ -157,6 +205,7 @@ const Profile = () => {
                         <strong>Exam ID:</strong>
                         <span>{profileData.examId}</span>
                     </div>
+
 
                     {/* Password */}
                     <div className="profile-field non-editable">
